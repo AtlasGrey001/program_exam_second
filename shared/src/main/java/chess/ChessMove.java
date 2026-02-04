@@ -7,23 +7,31 @@ package chess;
  * signature of the existing methods.
  */
 public class ChessMove {
+    private ChessPosition spos;
+    private ChessPosition epos;
+    private ChessPiece.PieceType promo;
 
     public ChessMove(ChessPosition startPosition, ChessPosition endPosition,
                      ChessPiece.PieceType promotionPiece) {
+        spos=startPosition;
+        epos=endPosition;
+        promo=promotionPiece;
     }
 
     /**
      * @return ChessPosition of starting location
      */
     public ChessPosition getStartPosition() {
-        throw new RuntimeException("Not implemented");
+        return spos;
+        //throw new RuntimeException("Not implemented");
     }
 
     /**
      * @return ChessPosition of ending location
      */
     public ChessPosition getEndPosition() {
-        throw new RuntimeException("Not implemented");
+        return epos;
+        //throw new RuntimeException("Not implemented");
     }
 
     /**
@@ -33,6 +41,27 @@ public class ChessMove {
      * @return Type of piece to promote a pawn to, or null if no promotion
      */
     public ChessPiece.PieceType getPromotionPiece() {
-        throw new RuntimeException("Not implemented");
+        return promo;
+        //throw new RuntimeException("Not implemented");
+    }
+
+    @Override
+    public boolean equals(Object o){
+        if(this==o)return true;
+        if(o==null || getClass() != o.getClass())return false;
+        ChessMove no = (ChessMove) o;
+        if(!spos.equals(no.spos))return false;
+        if(!epos.equals(no.epos))return false;
+        if(promo==null && no.promo==null)return true;
+        if(promo==null || no.promo==null)return false;
+        return promo==no.promo;
+    }
+
+    @Override
+    public int hashCode(){
+        int ans = 31*spos.hashCode()+epos.hashCode();
+        int val=0;
+        if(promo!=null)val=promo.hashCode();
+        return 31*ans+val;
     }
 }
